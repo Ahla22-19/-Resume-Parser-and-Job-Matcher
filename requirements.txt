@@ -1,0 +1,41 @@
+fastapi==0.104.1
+uvicorn==0.24.0
+python-multipart==0.0.6
+pydantic==2.5.0
+pydantic-settings==2.1.0
+openai==1.3.0
+langchain==0.0.350
+tavily-python==0.3.3
+PyPDF2==3.0.1
+python-docx==1.1.0
+pdfplumber==0.10.3
+pytest==7.4.3
+python-dotenv==1.0.0
+cors==1.0.1
+
+
+
+# ============================
+# 📌 REQUIREMENTS EXPLANATION
+# ============================
+#
+# Library              | Purpose in the Resume Job Agent Project
+# ---------------------------------------------------------------
+# fastapi              | Backend framework for building the API.
+# uvicorn              | Server that runs the FastAPI app.
+# python-multipart     | Allows FastAPI to handle resume file uploads.
+# pydantic             | Validates and structures request/response data.
+# pydantic-settings    | Loads app configuration (API keys) from .env.
+# openai               | Connects to OpenAI for job analysis & chatbot.
+# langchain            | Organizes LLM prompts, chains, workflow.
+# tavily-python        | Performs AI-powered web search (job info).
+# PyPDF2               | Extracts text from PDF resumes.
+# pdfplumber           | More accurate PDF parsing (tables, columns).
+# python-docx          | Reads DOCX resume files.
+# pytest               | Used for backend automated tests.
+# python-dotenv        | Loads environment variables from .env file.
+#
+# NOTE:
+# - "cors==1.0.1" is NOT needed. FastAPI has built-in CORS middleware.
+#
+# ============================
