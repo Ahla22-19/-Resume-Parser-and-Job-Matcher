@@ -1,0 +1,5 @@
+# Project root ignores
+.DS_Store
+*.log
+temp/
+tmp/

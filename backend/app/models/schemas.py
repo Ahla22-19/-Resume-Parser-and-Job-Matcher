@@ -48,6 +48,7 @@ class JobListing(BaseModel):
     description: str
     posted_date: Optional[str] = None
     salary: Optional[str] = None
+    match_score: Optional[float] = 0.0
 
 # API Response Models
 class ResumeParseResponse(BaseModel):
@@ -59,43 +60,3 @@ class ChatResponse(BaseModel):
     message: str
     job_suggestions: List[JobListing] = []
     requires_input: bool = False
-
-# ============================================================
-# 📌 SCHEMAS.PY — WHAT THESE MODELS ARE AND WHY THEY EXIST
-# ============================================================
-#
-# This file defines all data models (schemas) used by the
-# Resume Parser & Job Matcher backend.
-#
-# FastAPI + Pydantic use these models to:
-#   ✔ Validate incoming requests
-#   ✔ Structure API responses
-#   ✔ Keep data consistent between backend & frontend
-#   ✔ Auto-generate documentation (Swagger UI)
-#
-# -------------------------------
-# 🔹 Resume Parsing Models
-# -------------------------------
-# Experience      → One job experience inside the resume
-# Education       → One education entry (degree, institution, etc.)
-# ResumeData      → Final structured resume after parsing PDF/DOCX
-#
-# -------------------------------
-# 🔹 Chat & Job Search Models
-# -------------------------------
-# ChatMessage     → Represents user/assistant messages
-# JobSearchQuery  → What the user is searching for (skills, location)
-# JobListing      → One job suggestion returned by the AI
-#
-# -------------------------------
-# 🔹 API Response Models
-# -------------------------------
-# ResumeParseResponse → Response for resume upload API
-# ChatResponse        → Response for job chatbot API
-#
-# These models ensure your backend has clean, typed, consistent
-# data flow and prevent errors from bad input.
-#
-# ============================================================
-
-

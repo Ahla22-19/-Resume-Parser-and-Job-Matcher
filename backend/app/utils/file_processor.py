@@ -2,27 +2,33 @@ import pdfplumber
 from docx import Document
 import tempfile
 import os
-from typing import Optional
+from typing import Optional, Tuple
 
 class FileProcessor:
     @staticmethod
     def extract_text_from_pdf(file_path: str) -> str:
         """Extract text from PDF file"""
         text = ""
-        with pdfplumber.open(file_path) as pdf:
-            for page in pdf.pages:
-                page_text = page.extract_text()
-                if page_text:
-                    text += page_text + "\n"
+        try:
+            with pdfplumber.open(file_path) as pdf:
+                for page in pdf.pages:
+                    page_text = page.extract_text()
+                    if page_text:
+                        text += page_text + "\n"
+        except Exception as e:
+            raise Exception(f"PDF extraction failed: {str(e)}")
         return text
     
     @staticmethod
     def extract_text_from_docx(file_path: str) -> str:
         """Extract text from DOCX file"""
-        doc = Document(file_path)
         text = ""
-        for paragraph in doc.paragraphs:
-            text += paragraph.text + "\n"
+        try:
+            doc = Document(file_path)
+            for paragraph in doc.paragraphs:
+                text += paragraph.text + "\n"
+        except Exception as e:
+            raise Exception(f"DOCX extraction failed: {str(e)}")
         return text
     
     @staticmethod
@@ -36,7 +42,7 @@ class FileProcessor:
             raise ValueError(f"Unsupported file type: {file_type}")
     
     @staticmethod
-    def save_uploaded_file(uploaded_file, temp_dir: str = None) -> tuple:
+    def save_uploaded_file(uploaded_file, temp_dir: str = None) -> Tuple[str, str]:
         """Save uploaded file to temporary location"""
         if temp_dir is None:
             temp_dir = tempfile.gettempdir()
@@ -55,43 +61,3 @@ class FileProcessor:
         temp_file.close()
         
         return temp_file.name, uploaded_file.content_type
-    
-    # ==============================================================
-# 📌 FILE_PROCESSOR.PY — WHAT THIS FILE DOES & WHY
-# ==============================================================
-#
-# FileProcessor class handles all resume file operations:
-#   1️⃣ Save uploaded files safely to a temporary folder
-#   2️⃣ Extract text from PDFs using pdfplumber
-#   3️⃣ Extract text from DOCX using python-docx
-#   4️⃣ Automatically select extraction method based on file type
-#
-# This is essential for the Resume Parser & Job Matcher backend
-# because the AI agent needs clean text to analyze resumes.
-#
-# -------------------------------
-# 🔹 Methods Overview
-# -------------------------------
-# extract_text_from_pdf(file_path)
-#   → Reads every page of a PDF and combines text into a single string
-#
-# extract_text_from_docx(file_path)
-#   → Reads all paragraphs in a Word file and combines text
-#
-# extract_text_from_file(file_path, file_type)
-#   → Chooses correct extraction method based on MIME type
-#   → Raises error if file type is unsupported
-#
-# save_uploaded_file(uploaded_file, temp_dir=None)
-#   → Saves uploaded file to a temporary location
-#   → Returns (temporary_file_path, content_type)
-#
-# -------------------------------
-# 🔹 Why This File Matters
-# -------------------------------
-# ✓ Separates file handling logic from API routes
-# ✓ Ensures consistent text extraction for AI
-# ✓ Supports multiple file types safely
-# ✓ Works seamlessly with FastAPI UploadFile
-#
-# ==============================================================
